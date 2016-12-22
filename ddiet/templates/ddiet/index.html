@@ -38,6 +38,33 @@
 
  <script>
         var day_products = {{ day_products|safe }}
+        var products = {{ products|safe }};
+
+        var AutocompleteField = function(config) {
+            jsGrid.Field.call(this, config);
+        };
+
+        var theHidden;
+
+        AutocompleteField.prototype = new jsGrid.Field({
+            insertTemplate: function(value) {
+                return this._insertPicker = $("<input>").autocomplete({source: products});
+            },
+            editTemplate: function(value) {
+                return this._editPicker = $("<input>").autocomplete({source: products});
+            },
+            insertValue: function(value) {
+                return this._insertPicker.autocomplete();
+            },
+            editValue: function(value) {
+                return this._editPicker.autocomplete();
+            }
+        });
+
+        jsGrid.fields.autocompleteField = AutocompleteField;
+
+
+
 
         $("#jsGrid").jsGrid({
             width: "100%",
@@ -48,10 +75,14 @@
             sorting: true,
             paging: true,
 
+            onItemInserted: function(args) {
+                console.log(args.row);
+            },
+
             data: day_products,
 
             fields: [
-                { name: "Product", type: "text", width: 200, validate: "required" },
+                { name: "Product", type: "autocompleteField", width: 200, validate: "required" },
                 { name: "Amount", type: "number", width: 50 },
                 { name: "Carbs", type: "number", width: 50 },
                 { name: "Fat", type: "number", width: 50},
