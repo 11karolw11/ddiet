@@ -1,10 +1,13 @@
 import datetime
+import json
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 
 from ddiet import forms
 from ddiet import models
 from ddiet import daytable
+from ddiet import products
 
 product = None
 is_add = False
@@ -50,3 +53,17 @@ def update_product(request):
         product = models.Product.objects.get(name=request.POST['product'])
         product_form = forms.ProductForm(instance=product)
         return HttpResponse(template.render({'form': product_form}, request))
+
+@csrf_exempt
+def update_single_item(request):
+    if request.method == 'POST':
+        prod_name = request.POST.get('name')
+        prod_amount = request.POST.get('amount')
+
+        response_data = products.Products.calculate_macro(prod_name, prod_amount)
+
+        return HttpResponse(
+            response_data,
+            content_type="application/json"
+        )
+

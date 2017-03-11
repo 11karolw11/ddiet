@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^index$', views.index, name='index'),
+    url(r'^ajax/update_single_item/$', views.update_single_item, name='update_single_item'),
     url(r'^update_product$', views.update_product)
 ]

@@ -3,6 +3,7 @@
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <link type="text/css" rel="stylesheet" href="static/templates/ddiet/jsgrid.min.css" />
 <link type="text/css" rel="stylesheet" href="static/jsgrid-theme.min.css" />
+<script src="static/main.js"></script>
 <script type="text/javascript" src="static/jsgrid.min.js"></script>
 
 
@@ -58,12 +59,11 @@
             },
             editValue: function(value) {
                 return this._editPicker.autocomplete();
-            }
+            },
+
         });
 
         jsGrid.fields.autocompleteField = AutocompleteField;
-
-
 
 
         $("#jsGrid").jsGrid({
@@ -75,8 +75,16 @@
             sorting: true,
             paging: true,
 
-            onItemInserted: function(args) {
-                console.log(args.row);
+            onItemInserting: function(args) {
+                function updateArgs(result) {
+                    args.item.Carbs = result.Carbs
+                    args.item.Fat = result.Fat
+                    args.item.Protein = result.Protein
+                    args.item.Kcal = result.Kcal
+                    $("#jsGrid").jsGrid("refresh");
+                }
+
+                update_single_item(args.item.Product[0].value, args.item.Amount, updateArgs);
             },
 
             data: day_products,
@@ -84,10 +92,10 @@
             fields: [
                 { name: "Product", type: "autocompleteField", width: 200, validate: "required" },
                 { name: "Amount", type: "number", width: 50 },
-                { name: "Carbs", type: "number", width: 50 },
-                { name: "Fat", type: "number", width: 50},
-                { name: "Protein", type: "number", width: 50},
-                { name: "Kcal", type: "number", width: 50},
+                { name: "Carbs", type: "number", width: 50, inserting: false },
+                { name: "Fat", type: "number", width: 50, inserting: false},
+                { name: "Protein", type: "number", width: 50, inserting: false},
+                { name: "Kcal", type: "number", width: 50, inserting: false},
                 { name: "Valuable", type: "checkbox", title: "V", width: 20},
                 { type: "control" }
             ]
