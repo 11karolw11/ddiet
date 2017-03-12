@@ -75,6 +75,8 @@
             sorting: true,
             paging: true,
 
+            pageButtonCount: 7,
+
             onItemInserting: function(args) {
                 function updateArgs(result) {
                     args.item.Carbs = result.Carbs
@@ -90,13 +92,12 @@
             data: day_products,
 
             fields: [
-                { name: "Product", type: "autocompleteField", width: 200, validate: "required" },
-                { name: "Amount", type: "number", width: 50 },
-                { name: "Carbs", type: "number", width: 50, inserting: false },
-                { name: "Fat", type: "number", width: 50, inserting: false},
-                { name: "Protein", type: "number", width: 50, inserting: false},
-                { name: "Kcal", type: "number", width: 50, inserting: false},
-                { name: "Valuable", type: "checkbox", title: "V", width: 20},
+                { name: "Product", type: "autocompleteField", width: 300, validate: "required" },
+                { name: "Amount", type: "number", width: 80 },
+                { name: "Carbs", type: "number", width: 80, inserting: false, editing: false },
+                { name: "Fat", type: "number", width: 80, inserting: false, editing: false},
+                { name: "Protein", type: "number", width: 80, inserting: false, editing: false},
+                { name: "Kcal", type: "number", width: 80, inserting: false, editing: false},
                 { type: "control" }
             ]
         });
