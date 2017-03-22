@@ -59,11 +59,14 @@ def update_single_item(request):
     if request.method == 'POST':
         prod_name = request.POST.get('name')
         prod_amount = request.POST.get('amount')
+        prod_date = request.POST.get('date')
 
-        response_data = products.Products.calculate_macro(prod_name, prod_amount)
+        response_data = products.Products.update_product_day(prod_name, prod_date, prod_amount)
 
         return HttpResponse(
             response_data,
             content_type="application/json"
         )
+
+
 

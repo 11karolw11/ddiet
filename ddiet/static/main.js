@@ -1,4 +1,4 @@
-function update_single_item(name, amount, callback) {
+function update_single_item(name, amount, date, callback) {
     console.log("update single item")
     console.log(name)
     console.log(amount)
@@ -6,7 +6,7 @@ function update_single_item(name, amount, callback) {
     $.ajax({
         url : "/ajax/update_single_item/",
         type : "POST",
-        data : { name: name, amount: amount },
+        data : { name: name, amount: amount, date: date },
 
         success : function(json) {
             console.log(json)
@@ -22,3 +22,4 @@ function update_single_item(name, amount, callback) {
 
     })
 };
+

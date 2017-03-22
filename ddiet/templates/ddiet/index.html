@@ -74,8 +74,7 @@
             editing: true,
             sorting: true,
             paging: true,
-
-            pageButtonCount: 7,
+            autoload: true,
 
             onItemInserting: function(args) {
                 function updateArgs(result) {
@@ -86,7 +85,7 @@
                     $("#jsGrid").jsGrid("refresh");
                 }
 
-                update_single_item(args.item.Product[0].value, args.item.Amount, updateArgs);
+                update_single_item(args.item.Product[0].value, args.item.Amount, $("#datepicker").datepicker({ dateFormat: 'yyyy-mm-dd' }).val(), updateArgs);
             },
 
             data: day_products,
